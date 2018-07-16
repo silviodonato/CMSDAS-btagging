@@ -112,7 +112,7 @@ BTaggingExerciseI::BTaggingExerciseI(const edm::ParameterSet& iConfig) :
    // total DeepCSV c tagger (CvsB)
    bDiscriminatorsMap["DeepCSV_CvsB"] = fs->make<TH1F>(std::string("DeepCSV_CvsB").c_str(), std::string("DeepCSV_CvsB;discriminator (C vs B)").c_str(), 440, -0.5, 1.5);
    // 2D histo of the CvsL and CvsB taggers
-   bDiscriminatorsMap2D["DeepCSV_CvsAll"] = fs->make<TH2F>(std::string("DeepCSV_CvsAll").c_str(), std::string("DeepCSV_CvsAll;discriminator (C vs B);discriminator (C vs L)").c_str(), 440, -0.5, 1.5, 440, -0.5, 1.5);
+   bDiscriminatorsMap2D["DeepCSV_ctagger2D"] = fs->make<TH2F>(std::string("DeepCSV_ctagger2D").c_str(), std::string("DeepCSV_ctagger2D;discriminator (C vs B);discriminator (C vs L)").c_str(), 110, -0.5, 1.5, 110, -0.5, 1.5);
                   
    
 }
@@ -204,7 +204,7 @@ BTaggingExerciseI::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       deepCSV_cvsb = deepCSV_probc / ( deepCSV_probc + deepCSV_probb + deepCSV_probbb );
       bDiscriminatorsMap["DeepCSV_CvsB"]->Fill( deepCSV_cvsb );                  
       // 2D histo of the CvsL and CvsB taggers
-      bDiscriminatorsMap2D["DeepCSV_CvsAll"]->Fill( deepCSV_cvsb, deepCSV_cvsl );
+      bDiscriminatorsMap2D["DeepCSV_ctagger2D"]->Fill( deepCSV_cvsb, deepCSV_cvsl );
       
       counter++;
 	         
