@@ -40,9 +40,6 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(options.maxE
 ## Input files
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-        # /TTJets_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIIFall15MiniAODv2-PU25nsData2015v1_76X_mcRun2_asymptotic_v12-v1/MINIAODSIM
-        #'/store/mc/RunIIFall15MiniAODv2/TTJets_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/PU25nsData2015v1_76X_mcRun2_asymptotic_v12-v1/00000/023DCCDE-E3B8-E511-9985-002590DE6C56.root'
-#		  '/store/mc/RunIISpring16MiniAODv2/TTJets_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/MINIAODSIM/PUSpring16RAWAODSIM_80X_mcRun2_asymptotic_2016_miniAODv2_v0-v1/10000/00D85087-7925-E611-BE0A-6C3BE5B59200.root'
 #        '/store/mc/RunIIFall17MiniAOD/TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8/MINIAODSIM/94X_mc2017_realistic_v10-v1/00000/5C8C50A4-EEF4-E711-962D-008CFA1C6564.root'    
         '/store/mc/RunIIFall17MiniAOD/TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8/MINIAODSIM/94X_mc2017_realistic_v10-v1/50000/004C666D-C0E0-E711-AADB-0CC47A6C183A.root'    
     )
@@ -63,15 +60,6 @@ process.options   = cms.untracked.PSet(
 process.bTaggingExerciseIPartI = cms.EDAnalyzer('BTaggingExerciseI',
     jets = cms.InputTag('slimmedJets'), # input jet collection name
     bDiscriminators = cms.vstring(      # list of b-tag discriminators to access
-#        'pfTrackCountingHighEffBJetTags',
-#        'pfTrackCountingHighPurBJetTags',
-#        'pfJetProbabilityBJetTags',
-#        'pfJetBProbabilityBJetTags',
-#        'pfSimpleSecondaryVertexHighEffBJetTags',
-#        'pfSimpleSecondaryVertexHighPurBJetTags',
-#        'pfCombinedSecondaryVertexV2BJetTags',
-#        'pfCombinedInclusiveSecondaryVertexV2BJetTags',
-#        'pfCombinedMVAV2BJetTags'
          'pfCombinedInclusiveSecondaryVertexV2BJetTags',
 	 'pfDeepCSVJetTags:probb',
 	 'pfDeepCSVJetTags:probbb',
