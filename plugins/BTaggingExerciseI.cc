@@ -35,7 +35,6 @@
 #include "DataFormats/PatCandidates/interface/Jet.h"
 
 #include "TH1F.h"
-#include "TH2F.h"
 
 
 //
@@ -67,8 +66,7 @@ class BTaggingExerciseI : public edm::EDAnalyzer {
       edm::Service<TFileService> fs;
 
       // declare a map of b-tag discriminator histograms
-      std::map<std::string, TH1F *> bDiscriminatorsMap;
-      std::map<std::string, TH2F *> bDiscriminatorsMap2D;      
+      std::map<std::string, TH1F *> bDiscriminatorsMap;     
 };
 
 //
@@ -106,14 +104,8 @@ BTaggingExerciseI::BTaggingExerciseI(const edm::ParameterSet& iConfig) :
    // initialize dedicated histograms for the DeepCSV discriminants for main physics analysis usagee, which are manipulations of separate discriminants found in MiniAOD 
    //total DeepCSV b tagger
    bDiscriminatorsMap["DeepCSV_btagger"] = fs->make<TH1F>(std::string("DeepCSV_btagger").c_str(), std::string("DeepCSV_btagger;discriminator").c_str(), 440, -3, 2); 
-   
-   // total DeepCSV c tagger (CvsL)
-   bDiscriminatorsMap["DeepCSV_CvsL"] = fs->make<TH1F>(std::string("DeepCSV_CvsL").c_str(), std::string("DeepCSV_CvsL;discriminator (C vs L)").c_str(), 440, -0.5, 1.5);   
-   // total DeepCSV c tagger (CvsB)
-   bDiscriminatorsMap["DeepCSV_CvsB"] = fs->make<TH1F>(std::string("DeepCSV_CvsB").c_str(), std::string("DeepCSV_CvsB;discriminator (C vs B)").c_str(), 440, -0.5, 1.5);
-   // 2D histo of the CvsL and CvsB taggers
-   bDiscriminatorsMap2D["DeepCSV_ctagger2D"] = fs->make<TH2F>(std::string("DeepCSV_ctagger2D").c_str(), std::string("DeepCSV_ctagger2D;discriminator (C vs B);discriminator (C vs L)").c_str(), 110, -0.5, 1.5, 110, -0.5, 1.5);
-                  
+           
+   // book any other histograms you need   
    
 }
 
@@ -135,80 +127,7 @@ BTaggingExerciseI::~BTaggingExerciseI()
 void
 BTaggingExerciseI::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
-// define a jet handle
-  edm::Handle<std::vector<pat::Jet> > jets;
-  // get jets from the event
-  iEvent.getByToken(jets_, jets);
-
-
-
-  // loop over jets
-  unsigned int counter = 0;
-  for( auto jet = jets->begin(); jet != jets->end(); ++jet )
-    {
-      if( jet->pt() < 20 || std::abs(jet->eta()) > 2.4 ) continue; 
-      
-/*    
-      // to see avaiable discriminators (FIXME: only print for one event)
-      if( counter == 0 )
-      {
-        std::vector< std::pair< std::string, float > > pairdiscr;
-        pairdiscr = jet->getPairDiscri();
-        std:: cout << "Available discriminators: " << std::endl;
-        for( std::pair< std::string, float > discr : pairdiscr )
-        {
-           std:: cout << "   " << discr.first << std::endl;
-        } 
-      }   
-*/    
-    
-      // fill discriminator histograms
-      float deepCSV_probb = -999, deepCSV_probbb = -999;
-      float deepCSV_probc = -999, deepCSV_probudsg = -999;   
-      float deepCSV_b = -999;
-      float deepCSV_cvsl = -999;
-      float deepCSV_cvsb = -999;                     
-      
-      for( const std::string &bDiscr : bDiscriminators_ )
-      {
-      
-        bDiscriminatorsMap[bDiscr]->Fill( jet->bDiscriminator(bDiscr) );
-	
-        if(bDiscr == "pfDeepCSVJetTags:probb")
-	{
-	  deepCSV_probb = jet->bDiscriminator(bDiscr);
-	}
-	else if(bDiscr == "pfDeepCSVJetTags:probbb")
-	{
-	  deepCSV_probbb = jet->bDiscriminator(bDiscr);	
-	}
-	else if(bDiscr == "pfDeepCSVJetTags:probc")
-	{
-	  deepCSV_probc = jet->bDiscriminator(bDiscr);	
-	}	
-	else if(bDiscr == "pfDeepCSVJetTags:probudsg")
-	{
-	  deepCSV_probudsg = jet->bDiscriminator(bDiscr);	
-	}
-		
-      }
-      
-      // total DeepCSV
-      deepCSV_b = deepCSV_probb + deepCSV_probbb;
-      bDiscriminatorsMap["DeepCSV_btagger"]->Fill( deepCSV_b );
-      
-      // total DeepCSV c tagger (CvsL)
-      deepCSV_cvsl = deepCSV_probc / ( deepCSV_probc + deepCSV_probudsg );
-      bDiscriminatorsMap["DeepCSV_CvsL"]->Fill( deepCSV_cvsl );
-      // total DeepCSV c tagger (CvsB)
-      deepCSV_cvsb = deepCSV_probc / ( deepCSV_probc + deepCSV_probb + deepCSV_probbb );
-      bDiscriminatorsMap["DeepCSV_CvsB"]->Fill( deepCSV_cvsb );                  
-      // 2D histo of the CvsL and CvsB taggers
-      bDiscriminatorsMap2D["DeepCSV_ctagger2D"]->Fill( deepCSV_cvsb, deepCSV_cvsl );
-      
-      counter++;
-	         
-    }
+  // add your code
 }
 
 
