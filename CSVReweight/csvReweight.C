@@ -75,7 +75,7 @@ void csvReweight(bool isHF=1, int insample=1, int reportEvery=100000) {
   double mySample_nGen_ = 1.;
   std::string mySample_sampleName_ = "default";
 //  std::string mySample_inputDir_ = "/afs/cern.ch/work/s/spmondal/public/BTVCSVReweight/Samples/";
-  std::string mySample_inputDir_ = "/nfs/dust/cms/user/defrancm/BTVCSVReweight/";  
+  std::string mySample_inputDir_ = "/gpfs/ddn/cms/user/cmsdas/2019/btv/ex3/BTVCSVReweight/";  
   
   //******MC*****
   if( insample==2500 ){
